@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skobbler-MAP</title>
+    <!-- Skobbler -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css"/>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="skobbler-2.0.min.js"></script>
+</head>
+<body>
+<div id="skobbler-map" style="position:absolute; width:500px; height:500px;"></div>
+<script type="text/javascript">
+    var skobKey= '78d2c9352e3cc30a731de167061bd8d0';
+    var map = L.skobbler.map('skobbler-map', {
+        apiKey: skobKey,
+
+        mapStyle: 'day',
+        bicycleLanes: true,
+        onewayArrows: true,
+        pois: 'all',
+        primaryLanguage: 'en',
+        fallbackLanguage: 'en',
+        mapLabels: 'localNaming',
+        retinaDisplay: 'auto',
+
+        zoomControl: true,
+        zoomControlPosition: 'top-left',
+
+        center: [52.52112, 13.40554],
+        zoom: 12
+    });
+    var marker = L.marker([52.52112, 13.40554]).addTo(map);
+    marker.bindPopup("Hello world!<br>I am a popup.", {offset: new L.Point(-1, -41)}).openPopup();
+
+    //http://YOUR_API_KEY.tor.skobbler.net/tor/RSngx/command/json/version/locale/YOUR_API_KEY?parameters
+    //
+    let start='52.339528,8.980182';
+    let dest='52.876193,8.952722';
+    let profile = 'carFastest';
+    let skobApiUrl = `http://${skobKey}.tor.skobbler.net/tor/RSngx/calcroute/json/20_5/en/${skobKey}?start=${start}&dest=${dest}&profile=${profile}&points=yes&advice=yes`;
+    $.get(skobApiUrl, handle);
+
+    function handle(data, status) {
+        console.log("Handling")
+        console.log(status)
+        console.log(data)
+    }
+</script>
+</body>
+</html>
